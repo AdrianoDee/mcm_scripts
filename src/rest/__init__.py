@@ -7,3 +7,5 @@ Just to keep backward compatibility.
 from rest.applications.base import BaseClient
 from rest.applications.mcm.core import McM
 from rest.applications.stats.core import Stats2
+from rest.applications.relval.core import RelVal
+from rest.applications.relmon.core import RelMonService
