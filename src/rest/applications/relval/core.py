@@ -115,3 +115,11 @@ class RelVal(BaseClient):
         Requires manager role.
         """
         return self._post(url="api/relvals/update_workflows", data=data)
+        
+    ## Tickets methods
+    def create_ticket(self, data):
+        """
+        Create a new RelVal ticket.
+        Requires manager role.
+        """
+        return self._put(url="api/ticket/create", data=data)
