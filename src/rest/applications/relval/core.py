@@ -122,4 +122,4 @@ class RelVal(BaseClient):
         Create a new RelVal ticket.
         Requires manager role.
         """
-        return self._put(url="api/ticket/create", data=data)
+        return self._put(url="api/tickets/create", data=data)
