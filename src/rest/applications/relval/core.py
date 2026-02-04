@@ -126,7 +126,7 @@ class RelVal(BaseClient):
         """
         return self._put(url="api/tickets/create", data=data)
 
-    def create_relvals(self,data)
+    def create_relvals(self,data):
         """
         Create RelVals in a ticket.
         Requires manager role.
