@@ -125,10 +125,70 @@ class RelVal(BaseClient):
         Requires manager role.
         """
         return self._put(url="api/tickets/create", data=data)
-
+        
+    def delete_ticket(self, data):
+        """
+        Create a new RelVal ticket.
+        Requires manager role.
+        """
+        return self._put(url="api/tickets/delete", data=data)
+        
     def create_relvals(self,data):
         """
         Create RelVals in a ticket.
         Requires manager role.
         """
         return self._post(url="api/tickets/create_relvals", data=data)
+
+### Search methods
+    
+    def search(
+        self,
+        db_name: str,
+        *,
+        page: int = 0,
+        limit: int = 20,
+        sort: Optional[str] = None,
+        sort_asc: Optional[bool] = None,
+        **filters: Any,
+    ):
+        """
+        Search in the given database (e.g. 'relvals' or 'tickets').
+
+        Examples:
+            client.search("relvals", status="submitted", limit=50)
+            client.search("tickets", prepid="TICKET-123")
+            client.search("relvals", ticket="TICKET-123")  # triggers special-case on server
+        """
+        params: dict[str, str] = {
+            "db_name": db_name,
+            "page": str(page),
+            "limit": str(max(1, min(int(limit), 500))),
+        }
+
+        if sort is not None:
+            params["sort"] = sort
+
+        if sort_asc is not None:
+            # server expects "true"/"false" (it does str(...).lower() == 'true')
+            params["sort_asc"] = "true" if sort_asc else "false"
+
+        # Remaining kwargs become field filters (status=..., prepid=..., etc.)
+        for k, v in filters.items():
+            if v is None:
+                continue
+            if isinstance(v, (list, tuple, set)):
+                # server supports comma-separated values in some cases
+                params[k] = ",".join(map(str, v))
+            else:
+                params[k] = str(v)
+
+        qs = urlencode(params, safe=",")
+        return self._get(url=f"api/search?{qs}")
+
+    # Optional convenience wrappers
+    def search_relvals(self, **filters: Any):
+        return self.search("relvals", **filters)
+
+    def search_tickets(self, **filters: Any):
+        return self.search("tickets", **filters)
