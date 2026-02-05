@@ -2,7 +2,7 @@
 REST client for the RelVal application.
 """
 
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable, Optional, Union
 from urllib.parse import urlencode
 
 from rest.applications.base import BaseClient
