@@ -2,7 +2,7 @@
 REST client for the RelVal application.
 """
 
-from typing import Union
+from typing import Union, Optional
 
 from rest.applications.base import BaseClient
 
