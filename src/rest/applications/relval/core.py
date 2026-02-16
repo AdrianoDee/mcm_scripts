@@ -145,7 +145,7 @@ class RelVal(BaseClient):
         """
         Get ticket dictionary.
         """
-        return self._get(url=f"api/tickets/get_ticket/{prepid}")
+        return self._get(url=f"api/tickets/get/{prepid}")
         
 ### Search methods
     
