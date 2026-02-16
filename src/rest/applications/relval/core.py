@@ -141,6 +141,12 @@ class RelVal(BaseClient):
         """
         return self._post(url="api/tickets/create_relvals", data=data)
 
+    def get_ticket(self, prepid: str):
+        """
+        Get ticket dictionary.
+        """
+        return self._get(url=f"api/tickets/get_ticket/{prepid}")
+        
 ### Search methods
     
     def search(
